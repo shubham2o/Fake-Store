@@ -1,4 +1,17 @@
+import { useContext } from "react";
+import { ProductContext } from "../utils/Context";
+import { Link } from "react-router-dom";
+
 const Sidebar = () => {
+    const { products } = useContext(ProductContext);
+
+    let distinct_category = products && products.reduce((acc, cv) => [...acc, cv.category], []);
+    distinct_category = [...new Set(distinct_category)];
+
+    const color = () => {
+        return `rgb(${(Math.random() * 255).toFixed()}, ${(Math.random() * 255).toFixed()}, ${(Math.random() * 255).toFixed()})`;
+    }
+
     return (
         <nav className="w-[18.5%] h-full pt-6 bg-zinc-700 flex flex-col items-center">
             <a
@@ -14,22 +27,24 @@ const Sidebar = () => {
                 Category Filter
             </h1>
 
-            <ul className="w-[80%] tracking-wide">
-                <li className="mb-3 flex items-center gap-2.5">
-                    <span className="w-[10px] h-[10px] mb-0.5 rounded-full bg-red-500"></span>
-                    Category 1
-                </li>
-
-                <li className="mb-3 flex items-center gap-2.5">
-                    <span className="w-[10px] h-[10px] mb-0.5 rounded-full bg-yellow-500"></span>
-                    Category 2
-                </li>
-
-                <li className="mb-3 flex items-center gap-2.5">
-                    <span className="w-[10px] h-[10px] mb-0.5 rounded-full bg-green-500"></span>
-                    Category 3
-                </li>
-            </ul>
+            <div className="w-[78%]">
+                {distinct_category.map((item, index) => {
+                    return (
+                        <Link
+                            to={`/?category=${item}`}
+                            key={index}
+                            className="mb-2 rounded-full px-3.5 py-1 flex items-center gap-3 hover:bg-white hover:text-black hover:font-bold"
+                        >
+                            <span
+                                style={{ backgroundColor: color() }}
+                                className="w-[10px] h-[10px] mb-0.5 rounded-full"
+                            >
+                            </span>
+                            {item}
+                        </Link>
+                    )
+                })}
+            </div>
         </nav>
     )
 }

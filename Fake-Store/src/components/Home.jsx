@@ -19,7 +19,7 @@ const Home = () => {
                             <Link
                                 to={`/details/${item.id}`}
                                 key={index}
-                                className="w-[24%] h-[35vh] border rounded-lg p-3 bg-white text-black flex flex-col justify-center items-center"
+                                className="w-[24%] h-[35vh] border rounded-xl p-3 bg-white text-black flex flex-col justify-center items-center"
                             >
                                 <div
                                     style={{
