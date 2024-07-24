@@ -7,35 +7,37 @@ const Details = () => {
     const { id } = useParams();
 
     return (
-        <div className="w-full h-screen p-12">
+        <div className="w-full h-screen mx-8 flex justify-center items-center flex-wrap text-black">
             {products.map((item, index) => {
                 return (
                     item.id == id
                         ?
                         <div
                             key={index}
-                            className="w-[70%] h-[100%] mx-auto rounded-3xl p-[10%] bg-white text-black flex items-center gap-20"
+                            className="w-[80%] rounded-3xl py-10 bg-white flex justify-center items-center gap-12"
                         >
-                            <img
-                                src={item.image}
-                                className="w-[45%] h-[106%] object-contain"
-                            />
+                            <div className="w-[40%]">
+                                <img
+                                    src={item.image}
+                                    className="w-full h-72 object-contain"
+                                />
+                            </div>
 
-                            <div className="tracking-tight">
-                                <h1 className="text-3xl tracking-tighter">{item.title}</h1>
+                            <div className="h-[100%] w-[50%] tracking-tight">
+                                <h1 className="text-3xl">{item.title}</h1>
 
-                                <h3 className="my-4 text-zinc-400">{item.category}</h3>
+                                <h3 className="mt-2 mb-4 text-zinc-500">{item.category}</h3>
 
-                                <h2 className="mb-4 text-green-600 font-bold tracking-wide">${item.price}</h2>
+                                <h2 className="mb-4 text-green-600 font-semibold">${item.price}</h2>
 
-                                <p className="mb-[8%]">{item.description}</p>
+                                <p className="mb-6">{item.description}</p>
 
-                                <div className="h-9 text-white flex gap-7">
-                                    <Link className="rounded-2xl px-6 py-1.5 bg-blue-600">
+                                <div className="text-white flex gap-7">
+                                    <Link className="rounded-full px-6 py-1.5 bg-blue-600">
                                         Edit
                                     </Link>
 
-                                    <Link className="rounded-2xl px-4 py-1.5 bg-red-600">
+                                    <Link className="rounded-full px-4 py-1.5 bg-red-600">
                                         Delete
                                     </Link>
                                 </div>
