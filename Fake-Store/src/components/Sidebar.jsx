@@ -14,7 +14,7 @@ const Sidebar = () => {
                 Category Filter
             </h1>
 
-            <ul className="w-[80%]">
+            <ul className="w-[80%] text-sm tracking-wide">
                 <li className="mb-3 flex items-center gap-2.5">
                     <span className="w-[9px] h-[9px] mb-0.5 rounded-full bg-red-500"></span>
                     Category 1
