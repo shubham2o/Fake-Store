@@ -1,11 +1,29 @@
 import Sidebar from './Sidebar';
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import { ProductContext } from '../utils/Context';
 import Loading from './Loading';
+import axios from '../utils/axios';
 
 const Home = () => {
     const { products } = useContext(ProductContext);
+    const { search } = useLocation();
+    const category = decodeURIComponent(search.split('=')[1]);
+    const [filteredProducts, setFilteredProducts] = useState(null);
+
+    const getProductCategory = async () => {
+        try {
+            const { data } = await axios.get(`/products/category/${category}`);
+            setFilteredProducts(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        if (!category || category === "undefined") setFilteredProducts(products);
+        else getProductCategory();
+    }, [category, products]);
 
     return (
         <div className="w-full h-screen flex">
@@ -14,27 +32,32 @@ const Home = () => {
             {products.length > 0
                 ?
                 <div className="w-[81.5%] p-12 pt-[7%] flex flex-wrap gap-3 overflow-x-hidden overflow-y-auto">
-                    {products.map((item, index) => {
-                        return (
-                            <Link
-                                to={`/details/${item.id}`}
-                                key={index}
-                                className="w-[24%] h-[35vh] border rounded-xl p-3 bg-white text-black flex flex-col justify-center items-center"
-                            >
-                                <div
-                                    style={{
-                                        backgroundImage: `url(${item.image})`,
-                                    }}
-                                    className="w-full h-[100%] mb-3 bg-contain bg-no-repeat bg-center hover:scale-110"
+                    {filteredProducts
+                        ?
+                        filteredProducts.map((item, index) => {
+                            return (
+                                <Link
+                                    to={`/details/${item.id}`}
+                                    key={index}
+                                    className="w-[24%] h-[38vh] border rounded-lg p-3 bg-white text-center text-black flex flex-col justify-center items-center"
                                 >
-                                </div>
+                                    <div
+                                        style={{
+                                            backgroundImage: `url(${item.image})`,
+                                        }}
+                                        className="w-full h-[100%] mb-3.5 bg-contain bg-no-repeat bg-center hover:scale-110 hover:delay-75"
+                                    >
+                                    </div>
 
-                                <h1 className="hover:text-blue-600 tracking-tighter leading-tight text-sm flex justify-center items-center">
-                                    {item.title}
-                                </h1>
-                            </Link>
-                        )
-                    })}
+                                    <h1 className="hover:text-blue-600 tracking-tighter leading-tight flex justify-center items-center">
+                                        {item.title}
+                                    </h1>
+                                </Link>
+                            )
+                        })
+                        :
+                        <Loading />
+                    }
                 </div>
                 :
                 <Loading />
