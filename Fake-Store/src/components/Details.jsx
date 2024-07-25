@@ -14,7 +14,7 @@ const Details = () => {
                         ?
                         <div
                             key={index}
-                            className="w-[80%] rounded-3xl py-10 bg-white flex justify-center items-center gap-12"
+                            className="w-[75%] rounded-3xl py-10 bg-white flex justify-center items-center gap-12"
                         >
                             <div className="w-[40%]">
                                 <img
@@ -33,11 +33,11 @@ const Details = () => {
                                 <p className="mb-6">{item.description}</p>
 
                                 <div className="text-white flex gap-7">
-                                    <Link className="rounded-full px-6 py-1.5 bg-blue-600">
+                                    <Link className="rounded-lg px-5 py-1.5 bg-blue-600">
                                         Edit
                                     </Link>
 
-                                    <Link className="rounded-full px-4 py-1.5 bg-red-600">
+                                    <Link className="rounded-lg px-3 py-1.5 bg-red-600">
                                         Delete
                                     </Link>
                                 </div>

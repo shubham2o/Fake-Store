@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
     const { products } = useContext(ProductContext);
-
     let distinct_category = products && products.reduce((acc, cv) => [...acc, cv.category], []);
     distinct_category = [...new Set(distinct_category)];
 
@@ -13,7 +12,7 @@ const Sidebar = () => {
     }
 
     return (
-        <nav className="w-[18.5%] h-full pt-6 bg-zinc-700 flex flex-col items-center">
+        <nav className="w-[18.5%] h-full pt-24 bg-zinc-700 flex flex-col items-center">
             <a
                 href="/create"
                 className="border-2 border-blue-400 rounded-xl px-6 py-3 text-blue-400 text-lg font-semibold tracking-wider"
@@ -23,7 +22,7 @@ const Sidebar = () => {
 
             <hr className="w-[80%] my-4" />
 
-            <h1 className="w-[80%] mb-3 text-2xl font-semibold">
+            <h1 className="w-[80%] mb-2 text-2xl font-semibold">
                 Category Filter
             </h1>
 
@@ -33,7 +32,7 @@ const Sidebar = () => {
                         <Link
                             to={`/?category=${item}`}
                             key={index}
-                            className="mb-2 rounded-full px-3.5 py-1 flex items-center gap-3 hover:bg-white hover:text-black hover:font-bold"
+                            className="rounded-full px-3.5 py-1 flex items-center gap-3 hover:bg-white hover:text-black hover:font-bold hover:delay-100"
                         >
                             <span
                                 style={{ backgroundColor: color() }}
