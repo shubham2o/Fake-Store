@@ -22,9 +22,7 @@ const Sidebar = () => {
 
             <hr className="w-[80%] my-4" />
 
-            <h1 className="w-[80%] mb-2 text-2xl font-semibold">
-                Category Filter
-            </h1>
+            <h1 className="w-[80%] mb-2 text-2xl font-semibold">Category Filter</h1>
 
             <div className="w-[78%]">
                 {distinct_category.map((item, index) => {
