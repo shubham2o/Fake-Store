@@ -13,7 +13,7 @@ const App = () => {
           ?
           <Link
             to="/"
-            className="border-2 border-green-600 rounded-lg px-2 py-1 text-green-500 hover:bg-green-600 hover:text-white"
+            className="border-2 border-red-600 rounded-lg px-2 py-1 text-red-500 hover:bg-red-600 hover:text-white"
           >
             Home
           </Link>
