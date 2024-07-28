@@ -12,7 +12,7 @@ const Sidebar = () => {
     }
 
     return (
-        <nav className="w-[18.5%] h-full pt-24 bg-zinc-700 flex flex-col items-center">
+        <nav className="w-[18.5%] h-full pt-[6.7%] bg-zinc-700 flex flex-col items-center">
             <a
                 href="/create"
                 className="border-2 border-blue-500 rounded-lg px-4 py-2 text-blue-400 text-lg font-semibold tracking-wider hover:bg-blue-600 hover:border-blue-600 hover:text-white"
