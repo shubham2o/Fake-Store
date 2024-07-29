@@ -8,7 +8,7 @@ const App = () => {
 
   return (
     <div className="w-full h-screen flex">
-      <div className="absolute w-[18.5%] my-11 tracking-wide font-semibold flex justify-center items-center">
+      <div className="absolute w-[18.5%] my-[3.25rem] tracking-wide font-semibold flex justify-center items-center">
         {pathname != "/" || search.length > 0
           ?
           <Link
@@ -18,7 +18,7 @@ const App = () => {
             Home
           </Link>
           :
-          <div className="rounded-lg px-4 py-1.5 bg-green-700 font-normal">
+          <div className="rounded-lg px-2.5 py-1.5 bg-green-700 font-normal">
             || Fake Store ||
           </div>
         }
