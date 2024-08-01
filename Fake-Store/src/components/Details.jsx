@@ -1,10 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../utils/Context";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Details = () => {
-    const { products } = useContext(ProductContext);
+    const { products, setProducts } = useContext(ProductContext);
+    const [product, setProduct] = useState(null);
     const { id } = useParams();
+
+    useEffect(() => {
+        if (!product) {
+            setProduct(products.filter(p => p.id == id)[0]);
+        }
+    }, []);
+
+    const productDeleteHandler = (id) => {
+        const filteredProducts = products.filter(p => p.id !== id);
+        setProducts(filteredProducts);
+        localStorage.setItem("products", JSON.stringify(filteredProducts));
+    }
 
     return (
         <div className="w-full h-screen mx-8 flex justify-center items-center flex-wrap text-black">
@@ -33,13 +46,19 @@ const Details = () => {
                                 <p className="mb-6">{item.description}</p>
 
                                 <div className="text-white flex gap-7">
-                                    <Link className="rounded-lg px-5 py-1.5 bg-blue-600">
+                                    <button
+                                        className="rounded-lg px-5 py-1.5 bg-blue-600"
+                                    // onClick={}
+                                    >
                                         Edit
-                                    </Link>
+                                    </button>
 
-                                    <Link className="rounded-lg px-3 py-1.5 bg-red-600">
+                                    <button
+                                        className="rounded-lg px-3 py-1.5 bg-red-600"
+                                        onClick={() => productDeleteHandler(products.id)}
+                                    >
                                         Delete
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                         </div>

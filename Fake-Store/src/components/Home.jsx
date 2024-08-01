@@ -3,22 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { ProductContext } from '../utils/Context';
 import Loading from './Loading';
-import axios from '../utils/axios';
 
 const Home = () => {
     const { products } = useContext(ProductContext);
     const { search } = useLocation();
     const category = decodeURIComponent(search.split('=')[1]);
     const [filteredProducts, setFilteredProducts] = useState(null);
-
-    const getProductCategory = async () => {
-        try {
-            const { data } = await axios.get(`/products/category/${category}`);
-            setFilteredProducts(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     useEffect(() => {
         if (!filteredProducts || category === "undefined") {
