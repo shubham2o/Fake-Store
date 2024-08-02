@@ -1,45 +1,49 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../utils/Context";
-import { nanoid } from "nanoid";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Create = () => {
+const Edit = () => {
     const { products, setProducts } = useContext(ProductContext);
-    const [image, setImage] = useState("");
-    const [title, setTitle] = useState("");
-    const [category, setCategory] = useState("");
-    const [price, setPrice] = useState("");
-    const [description, setDescription] = useState("");
+    const { id } = useParams();
     const navigate = useNavigate();
+    const [product, setProduct] = useState({
+        title: "",
+        image: "",
+        category: "",
+        price: "",
+        description: "",
+    });
+
+    const changeHandler = (e) => {
+        setProduct({ ...product, [e.target.name]: e.target.value })
+    }
+
+    useEffect(() => {
+        setProduct(products.filter(item => item.id == id)[0]);
+    }, [id]);
 
     const addProductHandler = (event) => {
         event.preventDefault();
 
         if (
-            title.trim().length < 5 ||
-            image.trim().length < 5 ||
-            category.trim().length < 5 ||
-            price.trim().length < 1 ||
-            description.trim().length < 5
+            product.title.trim().length < 5 ||
+            product.image.trim().length < 5 ||
+            product.category.trim().length < 5 ||
+            product.price.trim().length < 1 ||
+            product.description.trim().length < 5
         ) {
             alert(`Please make sure to complete all fields. Thank you!`);
             return;
         }
 
-        const product = {
-            id: nanoid(),
-            title,
-            image,
-            category,
-            price,
-            description,
-        }
+        const pi = products.findIndex(p => p.id == id);
+        const copyData = [...products];
 
-        setProducts([...products, product]);
-        localStorage.setItem("products", JSON.stringify([...products, product]));
-        toast.success("Product Added Successfully");
-        navigate("/");
+        copyData[pi] = { ...products[pi], ...product };
+
+        setProducts(copyData);
+        localStorage.setItem("products", JSON.stringify(copyData));
+        navigate(-1);
     }
 
     return (
@@ -49,23 +53,25 @@ const Create = () => {
             onSubmit={addProductHandler}
         >
             <h1 className="w-1/2 mb-10 underline underline-offset-8 text-2xl text-center text-yellow-400">
-                Add New Product
+                Edit Product
             </h1>
 
             <input
                 type="url"
                 placeholder="Image Link"
                 className="w-1/2 mb-6 rounded-lg px-3.5 py-2 text-black bg-zinc-100 outline-none"
-                onChange={(e) => setImage(e.target.value)}
-                value={image}
+                name="image"
+                onChange={changeHandler}
+                value={product && product.image}
             />
 
             <input
                 type="text"
                 placeholder="Title"
                 className="w-1/2 mb-6 rounded-lg px-3.5 py-2 text-black bg-zinc-100 outline-none"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
+                name="title"
+                onChange={changeHandler}
+                value={product && product.title}
             />
 
             <div className="w-1/2 mb-6 flex justify-between flex-wrap">
@@ -73,8 +79,9 @@ const Create = () => {
                     type="text"
                     placeholder="Category"
                     className="w-[58%] rounded-lg px-3.5 py-2 text-black bg-zinc-100 outline-none"
-                    onChange={(e) => setCategory(e.target.value)}
-                    value={category}
+                    name="category"
+                    onChange={changeHandler}
+                    value={product && product.category}
                 />
 
                 <input
@@ -82,28 +89,29 @@ const Create = () => {
                     min={1}
                     placeholder="Price"
                     className="w-[36%] rounded-lg px-3.5 py-2 text-black bg-zinc-100 outline-none"
-                    onChange={(e) => setPrice(e.target.value)}
-                    value={price}
+                    name="price"
+                    onChange={changeHandler}
+                    value={product && product.price}
                 />
             </div>
 
             <textarea
                 placeholder="Description"
                 className="w-1/2 h-40 mb-10 rounded-lg px-3.5 py-2 text-black bg-zinc-100 outline-none"
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
+                name="description"
+                onChange={changeHandler}
+                value={product && product.description}
             />
 
             <div className="w-1/2 text-right">
                 <button
                     className="border-2 border-green-600 rounded-lg px-3.5 py-0.5 text-green-500 hover:bg-green-600 hover:border-green-600 hover:text-white"
-                // onClick={}
                 >
-                    Save
+                    Edit Product
                 </button>
             </div>
         </form>
     )
 }
 
-export default Create;
+export default Edit;

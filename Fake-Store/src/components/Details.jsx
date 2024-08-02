@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../utils/Context";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Details = () => {
     const { products, setProducts } = useContext(ProductContext);
     const [product, setProduct] = useState(null);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!product) {
@@ -17,6 +18,7 @@ const Details = () => {
         const filteredProducts = products.filter(p => p.id !== id);
         setProducts(filteredProducts);
         localStorage.setItem("products", JSON.stringify(filteredProducts));
+        navigate("/");
     }
 
     return (
@@ -46,12 +48,12 @@ const Details = () => {
                                 <p className="mb-6">{item.description}</p>
 
                                 <div className="text-white flex gap-7">
-                                    <button
+                                    <Link
+                                        to={`/edit/${item.id}`}
                                         className="rounded-lg px-5 py-1.5 bg-blue-600"
-                                    // onClick={}
                                     >
                                         Edit
-                                    </button>
+                                    </Link>
 
                                     <button
                                         className="rounded-lg px-3 py-1.5 bg-red-600"
